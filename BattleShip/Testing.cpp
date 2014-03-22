@@ -12,14 +12,12 @@
 
 bool subExists (int hole1,int hole2,int hole3)
 {
-    bool returnBool = 1;
-    
-    if (hole2 != hole1+1 || hole3 != hole2+1)
-        returnBool = false;
-    if (hole2 == hole1+10 && hole2 == hole3-10)
-        returnBool = true;
+    if (hole2 == hole1+1 && hole3 == hole2+1)
+        return true;
+    if (hole2 == hole1+10 && hole3 == hole2+10)
+        return true;
         
-    return returnBool;
+    return false;
 }
 
 TEST_CASE ( "BATTLESHIP TESTING", "[subExists]" )
