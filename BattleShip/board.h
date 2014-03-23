@@ -11,8 +11,8 @@
 
 struct board
 {
-    boardOne[10][10] = 0;
-    boardTwo[10][10] = 0;
+    char boardOne[10][10] = 0;
+    char boardTwo[10][10] = 0;
 };
 
 
