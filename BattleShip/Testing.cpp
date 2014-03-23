@@ -12,37 +12,36 @@
 #include <vector>
 #include "ShipStrucs.h"
 
+bool isOutOfBounds(int hole)
+{
+    return (hole > 100 || hole < 1);
+    
+}
 
-bool shipExists(std::vector<int> holes)
+
+bool isLegalShip(std::vector<int> holes)
 {
     int temp = holes[0];
-    bool verticalBool = true;
-    bool horizontalBool = true;
+    bool isVerticalShip = isOutOfBounds(temp);
+    bool isHorizontalShip = isOutOfBounds(temp);
     
-    if (temp > 100 || temp < 1)
-    {
-        verticalBool = false;
-        horizontalBool = false;
-    }
+    
     for (int i = 1; i < holes.size(); i++)
     {
-        if(holes[i] != temp+1 && horizontalBool)
-            horizontalBool = false;
+        if(holes[i] != temp+1 && isHorizontalShip)
+            isHorizontalShip = false;
         
-        if(holes[i] != temp+10 && verticalBool)
-            verticalBool = false;
+        if(holes[i] != temp+10 && isVerticalShip)
+            isVerticalShip = false;
         
         temp = holes[i];
         
-        if (temp > 100 || temp < 1)
-        {
-            verticalBool = false;
-            horizontalBool = false;
-        }
+        isVerticalShip = isOutOfBounds(temp);
+        isHorizontalShip = isOutOfBounds(temp);
         
     }
     
-    return (verticalBool || horizontalBool);
+    return (isVerticalShip || isHorizontalShip);
 }
 
 
@@ -57,12 +56,12 @@ TEST_CASE ( "BATTLESHIP TESTING", "[submarineExists]" )
     vector<int> outOfBounds {-2,-1,0,1,2};
     vector<int> outOfBounds2 {81,91,101};
 
-    REQUIRE( shipExists(horizontalGood) );
-    REQUIRE( !shipExists(horzontalBad) );
-    REQUIRE( shipExists(verticalGood) );
-    REQUIRE( !shipExists(verticalBad) );
-    REQUIRE( !shipExists(outOfBounds) );
-    REQUIRE( !shipExists(outOfBounds2) );
+    REQUIRE( isLegalShip(horizontalGood) );
+    REQUIRE( !isLegalShip(horzontalBad) );
+    REQUIRE( isLegalShip(verticalGood) );
+    REQUIRE( !isLegalShip(verticalBad) );
+    REQUIRE( !isLegalShip(outOfBounds) );
+    REQUIRE( !isLegalShip(outOfBounds2) );
     
     
    
