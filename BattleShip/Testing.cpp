@@ -11,40 +11,51 @@
 #include "catch.hpp"
 #include <vector>
 #include "ShipStrucs.h"
+#include<string>
+using std::string;
 
-bool isOutOfBounds(int hole)
+
+bool isValidBounds(int hole)
 {
-    return (hole > 100 || hole < 1);
-    
+    return !(hole > 100 || hole < 1);
 }
 
 
 bool isLegalShip(std::vector<int> holes)
 {
     int temp = holes[0];
-    bool isVerticalShip = isOutOfBounds(temp);
-    bool isHorizontalShip = isOutOfBounds(temp);
+    bool isVerticalShip = isValidBounds(temp);
+    bool isHorizontalShip = isValidBounds(temp);
     
     
     for (int i = 1; i < holes.size(); i++)
     {
-        if(holes[i] != temp+1 && isHorizontalShip)
+        if(isHorizontalShip && holes[i] != temp+1)
             isHorizontalShip = false;
         
-        if(holes[i] != temp+10 && isVerticalShip)
+        if(isVerticalShip && holes[i] != temp+10)
             isVerticalShip = false;
         
         temp = holes[i];
         
-        isVerticalShip = isOutOfBounds(temp);
-        isHorizontalShip = isOutOfBounds(temp);
+        if (isVerticalShip) {
+            isVerticalShip = isValidBounds(temp);
+        }
+        if (isHorizontalShip) {
+            isHorizontalShip = isValidBounds(temp);
+        }
+        
         
     }
     
     return (isVerticalShip || isHorizontalShip);
 }
 
-
+int coordinateToInt(string coord)
+{
+    
+    return 0;
+}
 
 
 TEST_CASE ( "BATTLESHIP TESTING", "[submarineExists]" )
@@ -62,6 +73,7 @@ TEST_CASE ( "BATTLESHIP TESTING", "[submarineExists]" )
     REQUIRE( !isLegalShip(verticalBad) );
     REQUIRE( !isLegalShip(outOfBounds) );
     REQUIRE( !isLegalShip(outOfBounds2) );
+    REQUIRE( coordinateToInt("c8") == 38 );
     
     
    
