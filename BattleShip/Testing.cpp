@@ -26,34 +26,11 @@ bool shipExists(std::vector<int> holes)
         
         if(holes[i] != temp+10 && verticalBool)
             verticalBool = false;
+        
+        temp = holes[i];
     }
     
     return (verticalBool || horizontalBool);
-}
-
-bool submarineExists (ship submarine)
-{
-    return shipExists(submarine.holes);
-}
-
-bool aircraftExists (ship aircraftCarrier)
-{
-    return shipExists(aircraftCarrier.holes);
-}
-
-bool battleshipExists (ship battleship)
-{
-    return shipExists(battleship.holes);
-}
-
-bool destroyerExists (ship destroyer)
-{
-    return shipExists(destroyer.holes);
-}
-
-bool patrolboatExists (ship patrolBoat)
-{
-    return shipExists(patrolBoat.holes);
 }
 
 
@@ -62,9 +39,9 @@ bool patrolboatExists (ship patrolBoat)
 TEST_CASE ( "BATTLESHIP TESTING", "[submarineExists]" )
 {
     vector<int> horizontalGood {1,2,3,4,5};
-    vector<int> horzontalBad {1,2,3,4,6};
+    vector<int> horzontalBad {1,3,5,7,8};
     vector<int> verticalGood {1,11,21,31,41};
-    vector<int> verticalBad {1,11,21,31,32};
+    vector<int> verticalBad {1,3,7,6,5};
     
 
     REQUIRE( shipExists(horizontalGood) );
