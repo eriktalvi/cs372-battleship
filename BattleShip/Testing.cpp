@@ -130,19 +130,24 @@ bool placeAllShips()
     
     vector<int> placementInts;
     
+    if(direction == "horizontal")
+        coord[1] = coord[1] - 1;
+    if (direction == "vertical")
+        coord[0] = coord[0] - 1;
+    
     for (int i = 0; i < 5; i++)
     {
-        
         if(direction == "horizontal")
         {
-            coord[1] = coord[1] + i;
+            coord[1] = coord[1] + 1;
             placementInts.push_back(coordinateToInt(coord));
         }
         else if (direction == "vertical")
         {
-            coord[1] = coord[1] + (i*10);
+            coord[0] = coord[0] + 1;
             placementInts.push_back(coordinateToInt(coord));
         }
+        std::cout << placementInts[i];
     }
     
     if (!isLegalShip(placementInts))
