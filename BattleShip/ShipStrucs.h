@@ -8,35 +8,18 @@
 
 #ifndef BattleShip_ShipStrucs_h
 #define BattleShip_ShipStrucs_h
+using std::vector;
 
-struct aircraftCarrier
+
+struct ship
 {
-    int hole1, hole2, hole3, hole4, hole5 = NULL;
+    vector<int> holes;
 };
 
-struct battleship
-{
-    int hole1, hole2, hole3, hole4 = NULL;
-};
-
-struct submarine
-{
-    int hole1, hole2, hole3 = NULL;
-};
-
-struct destroyer
-{
-    int hole1, hole2, hole3 = NULL;
-};
-
-struct patrolBoat
-{
-    int hole1, hole2 = NULL;
-};
 
 int attack(int coordinates)
 {
-    if (aircraftCarrier
+    return 0;
 }
 
 #endif

@@ -14,7 +14,7 @@
 		<string>https://github.com/eriktalvi/cs372-battleship</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>BattleShip.xcodeproj/project.xcworkspace</string>
+	<string>trunk/BattleShip.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>CAFF07DD-DF4F-40E6-928D-928AE0C53F70</key>

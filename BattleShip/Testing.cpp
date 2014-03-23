@@ -9,50 +9,51 @@
 
 #define CATCH_CONFIG_MAIN // This tells Catch to provide main() - only do this in one cpp file
 #include "catch.hpp"
+#include <vector>
+#include "ShipStrucs.h"
 
-bool submarineExists (int hole1,int hole2,int hole3)
+
+bool shipExists(std::vector<int> holes)
 {
-    if (hole2 == hole1+1 && hole3 == hole2+1)
-        return true;
-    if (hole2 == hole1+10 && hole3 == hole2+10)
-        return true;
+    int temp = holes[0];
+    bool verticalBool = true;
+    bool horizontalBool = true;
+    
+    for (int i = 1; i < holes.size(); i++)
+    {
+        if(holes[i] != temp+1 && horizontalBool)
+            horizontalBool = false;
         
-    return false;
-}
-
-bool aircraftExists (int hole1,int hole2,int hole3, int hole4, int hole5)
-{
-    if (hole2 == hole1+1 && hole3 == hole2+1 && hole4 == hole3+1 && hole5 == hole4+1)
-        return true;
-    if (hole2 == hole1+10 && hole3 == hole2+10 && hole4 == hole3+10 && hole5 == hole4+10)
-        return true;
+        if(holes[i] != temp+10 && verticalBool)
+            verticalBool = false;
+    }
     
-    return false;
+    return (verticalBool || horizontalBool);
 }
 
-bool battleshipExists (int hole1,int hole2,int hole3, int hole4)
+bool submarineExists (ship submarine)
 {
-    if (hole2 == hole1+1 && hole3 == hole2+1 && hole4 == hole3+1)
-        return true;
-    if (hole2 == hole1+10 && hole3 == hole2+10 && hole4 == hole3+10)
-        return true;
-    
-    return false;
+    return shipExists(submarine.holes);
 }
 
-bool destroyerExists (int hole1,int hole2,int hole3)
+bool aircraftExists (ship aircraftCarrier)
 {
-    return submarineExists(hole1, hole2, hole3);
+    return shipExists(aircraftCarrier.holes);
 }
 
-bool patrolboatExists (int hole1,int hole2)
+bool battleshipExists (ship battleship)
 {
-    if (hole2 == hole1+1)
-        return true;
-    if (hole2 == hole1+10)
-        return true;
-    
-    return false;
+    return shipExists(battleship.holes);
+}
+
+bool destroyerExists (ship destroyer)
+{
+    return shipExists(destroyer.holes);
+}
+
+bool patrolboatExists (ship patrolBoat)
+{
+    return shipExists(patrolBoat.holes);
 }
 
 
@@ -60,26 +61,18 @@ bool patrolboatExists (int hole1,int hole2)
 
 TEST_CASE ( "BATTLESHIP TESTING", "[submarineExists]" )
 {
-    REQUIRE( submarineExists(1,2,3) == 1 );
-    REQUIRE( submarineExists(1,2,4) == 0 );
-    REQUIRE( submarineExists(1,3,4) == 0 );
-    REQUIRE( submarineExists(1,11,21) == 1 );
-    REQUIRE( aircraftExists(1,11,21,31,41) == 1 );
-    REQUIRE( battleshipExists(1,11,21,31) == 1 );
-    REQUIRE( destroyerExists(1,11,21) == 1 );
-    REQUIRE( patrolboatExists(1,11) == 1 );
-    REQUIRE( aircraftExists(1,2,3,4,5) == 1 );
-    REQUIRE( battleshipExists(1,2,3,4) == 1 );
-    REQUIRE( destroyerExists(1,2,3) == 1 );
-    REQUIRE( patrolboatExists(1,2) == 1 );
-    REQUIRE( aircraftExists(1,11,21,31,40) == 0 );
-    REQUIRE( battleshipExists(1,11,21,30) == 0 );
-    REQUIRE( destroyerExists(1,41,21) == 0 );
-    REQUIRE( patrolboatExists(1,41) == 0 );
-    REQUIRE( aircraftExists(1,2,3,4,8) == 0 );
-    REQUIRE( battleshipExists(1,7,3,5) == 0 );
-    REQUIRE( destroyerExists(1,2,5) == 0 );
-    REQUIRE( patrolboatExists(1,3) == 0 );
+    vector<int> horizontalGood {1,2,3,4,5};
+    vector<int> horzontalBad {1,2,3,4,6};
+    vector<int> verticalGood {1,11,21,31,41};
+    vector<int> verticalBad {1,11,21,31,32};
+    
+
+    REQUIRE( shipExists(horizontalGood) );
+    REQUIRE( !shipExists(horzontalBad) );
+    REQUIRE( shipExists(verticalGood) );
+    REQUIRE( !shipExists(verticalBad) );
+    
+   
     
 }
 
