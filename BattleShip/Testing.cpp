@@ -11,10 +11,9 @@
 #include "catch.hpp"
 #include "ShipStrucs.h"
 
+#include <algorithm>
 #include <random>
-
 #include <vector>
-
 #include<string>
 using std::string;
 
@@ -97,17 +96,37 @@ int coordinateToInt(string coord)
 
 bool placeAllShips()
 {
-    string coord;
-    string direction;
+    string coord = "";
+    string direction = "";
     
-    std::cout << "It's time to place your ships! Please enter the initial hole in letter-number form i.e. C3 using letter A-J and numbers 0-9" << std::endl;
+    std::cout << "It's time to place your ships! Please enter the initial hole in letter-number form i.e. C3 using letter A-J and numbers 0-9." << std::endl;
+    std::cout << std::endl;
     std::cout << "Your ship will be extended horizontally to the right or vertically down from the initial coordinate/hole." << std::endl;
+    std::cout << std::endl;
+    std::cout << "First we will place your aircraft carrier" <<std::endl;
     
     std::cout << "Enter initial coordinate:";
     std::cin >> coord;
     
-    std::cout << "Place ship vertically or horizontally from this coordinate: ";
+    while (!coordinateToInt(coord))
+    {
+        std::cout << "Invalid coordinate. Coords are letter then number; A-J and 0-9";
+        std::cout << "Enter initial coordinate:";
+        std::cin >> coord;
+    }
+    
+    std::cout << "Place ship (VERTICAL)ly or (HORIZONTAL)ly from this coordinate: ";
     std::cin >> direction;
+    std::transform(direction.begin(),direction.end(),direction.begin(),::tolower);
+    
+    while (direction != "vertical" || direction != "horizontal")
+    {
+        std::cout << "Enter either VERTICAL or HORIZONTAL";
+        std::cout << "Place ship (VERTICAL)ly or (HORIZONTAL)ly from this coordinate: ";
+        std::cin >> direction;
+        std::transform(direction.begin(),direction.end(),direction.begin(),::tolower);
+    }
+    
     
     return 0;
 }
