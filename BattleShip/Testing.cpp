@@ -17,7 +17,7 @@ using std::string;
 
 bool isValidBounds(int hole)
 {
-    return !(hole > 100 || hole < 1);
+    return !(hole > 99 || hole < 0);
 }
 
 
@@ -53,8 +53,19 @@ bool isLegalShip(std::vector<int> holes)
 
 int coordinateToInt(string coord)
 {
+    char coordLetter = tolower(coord[0]);
+    if(coordLetter < 'a' || coordLetter > 'j')
+    {
+        return 0;
+    }
     
-    return 0;
+    char coordNumber = coord[1];
+    if(coordNumber < '0' || coordNumber > '9')
+    {
+        return 0;
+    }
+    
+    return (coordLetter - 'a' + 1)*10 + coordNumber - 58;
 }
 
 
@@ -73,7 +84,16 @@ TEST_CASE ( "BATTLESHIP TESTING", "[submarineExists]" )
     REQUIRE( !isLegalShip(verticalBad) );
     REQUIRE( !isLegalShip(outOfBounds) );
     REQUIRE( !isLegalShip(outOfBounds2) );
-    REQUIRE( coordinateToInt("c8") == 38 );
+    REQUIRE( coordinateToInt("C8") == 28 );
+    REQUIRE( !coordinateToInt("1") );
+    REQUIRE( coordinateToInt("g0") == 60 );
+    REQUIRE( coordinateToInt("f4") == 54 );
+    REQUIRE( coordinateToInt("F4") == 54 );
+    REQUIRE( !coordinateToInt("k11") );
+    REQUIRE( coordinateToInt("f11") == 51 ); // If more than one number for coordinate x it takes first digit
+    REQUIRE( !coordinateToInt("-4") );
+
+    
     
     
    
