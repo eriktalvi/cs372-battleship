@@ -119,16 +119,41 @@ bool placeAllShips()
     std::cin >> direction;
     std::transform(direction.begin(),direction.end(),direction.begin(),::tolower);
     
-    while (direction != "vertical" || direction != "horizontal")
+    while (direction != "vertical" && direction != "horizontal")
     {
-        std::cout << "Enter either VERTICAL or HORIZONTAL";
+        
+        std::cout << "Enter either VERTICAL or HORIZONTAL" << std::endl;
         std::cout << "Place ship (VERTICAL)ly or (HORIZONTAL)ly from this coordinate: ";
         std::cin >> direction;
         std::transform(direction.begin(),direction.end(),direction.begin(),::tolower);
     }
     
+    vector<int> placementInts;
     
-    return 0;
+    for (int i = 0; i < 5; i++)
+    {
+        
+        if(direction == "horizontal")
+        {
+            coord[1] = coord[1] + i;
+            placementInts.push_back(coordinateToInt(coord));
+        }
+        else if (direction == "vertical")
+        {
+            coord[1] = coord[1] + (i*10);
+            placementInts.push_back(coordinateToInt(coord));
+        }
+    }
+    
+    if (!isLegalShip(placementInts))
+    {
+        std::cout << "cant place ship there";
+        return 0;
+    }
+    
+    // Ship will exist within a future player Class.
+    
+    return 1;
 }
 
 TEST_CASE ( "BATTLESHIP TESTING", "[submarineExists]" )
