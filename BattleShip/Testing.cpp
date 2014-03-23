@@ -4,13 +4,15 @@
 //
 //  Created by Erik Talvi on 3/21/14.
 //  Copyright (c) 2014 Prodigy. All rights reserved.
-//
+
 
 
 #define CATCH_CONFIG_MAIN // This tells Catch to provide main() - only do this in one cpp file
 #include "catch.hpp"
-#include <vector>
 #include "ShipStrucs.h"
+
+#include <vector>
+
 #include<string>
 using std::string;
 
@@ -51,19 +53,29 @@ bool isLegalShip(std::vector<int> holes)
     return (isVerticalShip || isHorizontalShip);
 }
 
+bool isValidCoordLetter(char coordLetter)
+{
+    return !(coordLetter < 'a' || coordLetter > 'j');
+}
+
+bool isValidCoordNumber(char coordNumber)
+{
+    return !(coordNumber < '0' || coordNumber > '9');
+}
+
 int coordinateToInt(string coord)
 {
+    if(coord.size() != 2)
+        return 100;
+    
     char coordLetter = tolower(coord[0]);
-    if(coordLetter < 'a' || coordLetter > 'j')
-    {
-        return 0;
-    }
+    
+    if (!isValidCoordLetter(coordLetter))
+        return 100;
     
     char coordNumber = coord[1];
-    if(coordNumber < '0' || coordNumber > '9')
-    {
-        return 0;
-    }
+    if (!isValidCoordNumber(coordNumber))
+        return 100;
     
     return (coordLetter - 'a' + 1)*10 + coordNumber - 58;
 }
@@ -85,19 +97,14 @@ TEST_CASE ( "BATTLESHIP TESTING", "[submarineExists]" )
     REQUIRE( !isLegalShip(outOfBounds) );
     REQUIRE( !isLegalShip(outOfBounds2) );
     REQUIRE( coordinateToInt("C8") == 28 );
-    REQUIRE( !coordinateToInt("1") );
+    REQUIRE( coordinateToInt("1") == 100);
     REQUIRE( coordinateToInt("g0") == 60 );
     REQUIRE( coordinateToInt("f4") == 54 );
     REQUIRE( coordinateToInt("F4") == 54 );
-    REQUIRE( !coordinateToInt("k11") );
-    REQUIRE( coordinateToInt("f11") == 51 ); // If more than one number for coordinate x it takes first digit
-    REQUIRE( !coordinateToInt("-4") );
+    REQUIRE( coordinateToInt("k11") == 100 );
+    REQUIRE( coordinateToInt("f11") == 100 );
+    REQUIRE( coordinateToInt("-4") == 100 );
 
-    
-    
-    
-   
-    
 }
 
 
