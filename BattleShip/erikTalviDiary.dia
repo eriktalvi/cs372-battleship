@@ -21,3 +21,23 @@ Met with Nick. Talked about spreadsheet usage and will use it to facilitate remo
 Dear Diary,
 Tuesday March 4 2014
 Added our user stories to KANBAN board. Should be good to start gettin at it.
+
+Dear Diary,
+Thursday March 13 2014
+Talked about meeting over break due to inactivity of project last week due to my involvement with CCDC and this week due to midterms before Spring break. Talked about how we can do remote pair programming if necessary.
+
+Dear Diary,
+Friday March 21 2014
+Started actually trying to code today. Nick had some stuff ready to go, but we are having issues getting Xcode to sync with github. Found out it had to do with Xcode specific user files being added to repository and causing conflicts. Added them to gitignore which fixed some, but not all. Have to manually ignore some files during commits and it is also easier to sometimes recheck out the repo than to update if you've missed several commits.
+
+Dear Diary,
+Saturday March 22 2014
+Actually got some user stories done today as the github issue was resolved last night. Pair programming means that we are spending 2 hours for every hour on one user story that we work on.
+
+Dear Diary,
+Sunday March 23 2014
+How do we have the user interface with our program, but have the testing code also use the interface? Don't know so we are ignorning that. Adding in a new interface cause us to refactore a bunch today. Created a ship struct and wrestled with how to actually get the initialization list in the struct to work correctly. Then had to change all other code to use the struct. Lots of refactoring, not many user stories ...
+
+Dear Diary,
+Monday March 24 2014
+Finished refactoring from last night had to change legalShip to default to true and set false if bad. Met with Nick about presentation.
