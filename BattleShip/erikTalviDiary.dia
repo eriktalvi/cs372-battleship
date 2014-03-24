@@ -36,7 +36,7 @@ Actually got some user stories done today as the github issue was resolved last 
 
 Dear Diary,
 Sunday March 23 2014
-How do we have the user interface with our program, but have the testing code also use the interface? Don't know so we are ignorning that. Adding in a new interface cause us to refactore a bunch today. Created a ship struct and wrestled with how to actually get the initialization list in the struct to work correctly. Then had to change all other code to use the struct. Lots of refactoring, not many user stories ...
+How do we have the user interface with our program, but have the testing code also use the interface? Don't know so we are ignorning that. Adding in a new interface cause us to refactore a bunch today. Created a ship struct and wrestled with how to actually get the initialization list in the struct to work correctly. Then had to change all other code to use the struct. Lots of refactoring, not many user stories ... Also random tests.
 
 Dear Diary,
 Monday March 24 2014
