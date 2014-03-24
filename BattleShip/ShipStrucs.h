@@ -9,14 +9,17 @@
 #ifndef BattleShip_ShipStrucs_h
 #define BattleShip_ShipStrucs_h
 using std::vector;
-
+#include<string>
+using std::string;
 
 struct ships
 {
-    struct aircraftCarrier
-    {
-        
-    };
+    bool legalShip;
+    string type;
+    string initialCoordinate;
+    string direction;
+    int size;
+    
     vector<int> holes;
 };
 
