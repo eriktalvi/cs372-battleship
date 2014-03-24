@@ -17,71 +17,13 @@
 #include<string>
 using std::string;
 
-
-
-bool isValidBounds(int hole)
-{
-    return !(hole > 99 || hole < 0);
-}
-
-
-void isLegalShip(ships currentShip)
-{
-    int temp = currentShip.holes[0];
-
-    for (int i = 1; i < currentShip.size; i++)
-    {
-        if(currentShip.direction == "horizontal" && currentShip.holes[i] == temp+1)
-            currentShip.legalShip = true;
-        
-        else if(currentShip.direction == "vertical" && currentShip.holes[i] == temp+10)
-            currentShip.legalShip = true;
-        
-        else
-            currentShip.legalShip = false;
-        
-        temp = currentShip.holes[i];
-        
-        currentShip.legalShip = isValidBounds(temp);
-    }
-}
-
-bool isValidCoordLetter(char coordLetter)
-{
-    return !(coordLetter < 'a' || coordLetter > 'j');
-}
-
-bool isValidCoordNumber(char coordNumber)
-{
-    return !(coordNumber < '0' || coordNumber > '9');
-}
-
-int coordinateToInt(string coord)
-{
-    if(coord.size() != 2)
-        return 100;
-    
-    char coordLetter = tolower(coord[0]);
-    
-    if (!isValidCoordLetter(coordLetter))
-        return 100;
-    
-    char coordNumber = coord[1];
-    if (!isValidCoordNumber(coordNumber))
-        return 100;
-    
-    return (coordLetter - 'a' + 1)*10 + coordNumber - 58;
-}
-
-string userInputCoordinate()
-{
+string userInputCoordinate() {
     string coord = "";
     
     std::cout << "Enter initial coordinate:";
     std::cin >> coord;
     
-    while (!coordinateToInt(coord))
-    {
+    while (!coordinateToInt(coord)) {
         std::cout << "Invalid coordinate. Coords are letter then number; A-J and 0-9";
         std::cout << "Enter initial coordinate:";
         std::cin >> coord;
@@ -90,16 +32,14 @@ string userInputCoordinate()
     return coord;
 }
 
-string userInputDirection()
-{
+string userInputDirection() {
     string direction = "";
     
     std::cout << "Place ship (VERTICAL)ly or (HORIZONTAL)ly from this coordinate: ";
     std::cin >> direction;
     std::transform(direction.begin(),direction.end(),direction.begin(),::tolower);
     
-    while (direction != "vertical" && direction != "horizontal")
-    {
+    while (direction != "vertical" && direction != "horizontal") {
         std::cout << "Enter either VERTICAL or HORIZONTAL" << std::endl;
         std::cout << "Place ship (VERTICAL)ly or (HORIZONTAL)ly from this coordinate: ";
         std::cin >> direction;
@@ -109,70 +49,63 @@ string userInputDirection()
     return direction;
 }
 
-void createPlacementVector (ships currentShip)
-{
-    std::cout << "Create Placement Vector   :" << currentShip.legalShip <<std::endl;
-    string tempCoord = currentShip.initialCoordinate;
-    
-    if(currentShip.direction == "horizontal")
-        tempCoord[1] = tempCoord[1] - 1;
-    if (currentShip.direction == "vertical")
-        tempCoord[0] = tempCoord[0] - 1;
-    
-    for (int i = 0; i < currentShip.size; i++)
-    {
-        if(currentShip.direction == "horizontal")
-            tempCoord[1] = tempCoord[1] + 1;
-        if (currentShip.direction == "vertical")
-            tempCoord[0] = tempCoord[0] + 1;
-        currentShip.holes.push_back(coordinateToInt(tempCoord));
-        std::cout << currentShip.holes[i] << std::endl;
-    }
-}
-
-bool createShip(ships currentShip)
-{
+bool createShip(ships currentShip) {
     std::cout << "Placing " << currentShip.type <<std::endl;
-    currentShip.initialCoordinate = userInputCoordinate();
-    currentShip.direction = userInputDirection();
-    
-    createPlacementVector(currentShip);
-    
-   if (!currentShip.legalShip)
-        return 0;
-    
-    return true;
+//    currentShip.initialCoordinate = userInputCoordinate();
+//    currentShip.direction = userInputDirection();
+    currentShip.createPlacementVector();
+    return currentShip.legalShip;
 }
 
-bool placeAllShips()
-{
-    std::cout << "It's time to place your ships! Please enter the initial hole in letter-number form i.e. C3 using letter A-J and numbers 0-9." << std::endl;
+bool placeAllShips() {
+    std::cout << "It's time to place your ships! Please enter the initial hole in letter-number form i.e."
+        << "C3 using letter A-J and numbers 0-9." << std::endl;
     std::cout << std::endl;
     std::cout << "Your ship will be extended horizontally to the right or vertically down from the initial coordinate/hole." << std::endl;
-    std::cout << std::endl;
     
     ships aircraftCarrier;
     aircraftCarrier.size = 5;
     aircraftCarrier.type = "Aircraft Carrier";
     
-    
-    while (!createShip(aircraftCarrier))
-    {
-        std::cout << aircraftCarrier.holes[0] << " " <<aircraftCarrier.holes[1] << " " <<aircraftCarrier.holes[2] << " " <<aircraftCarrier.holes[3] << " " <<aircraftCarrier.holes[4] << std::endl << aircraftCarrier.legalShip <<std::endl;
-        
+    while (!createShip(aircraftCarrier)) {
         std::cout << "Bad placement, try again" << std::endl;
     }
 
     return 1;
 }
 
-TEST_CASE ( "BATTLESHIP TESTING", "[submarineExists]" )
-{
-    placeAllShips();
+TEST_CASE ( "BATTLESHIP TESTING", "[submarineExists]" ) {
+    std::cout << "good ship";
+    ships testShipGoodHor;
+    testShipGoodHor.createPlacementVector();
     
+    std::cout << "bad ship";
+    ships testShipBadHor;
+    testShipBadHor.type = "Bad hor";
+    testShipBadHor.initialCoordinate = "a7";
+    testShipBadHor.createPlacementVector();
     
-    
-    
+    std::cout << "good ship";
+    ships testShipGoodVert;
+    testShipGoodVert.direction = "vertical";
+    testShipGoodVert.createPlacementVector();
+
+    std::cout << "bad ship";
+    ships testShipBadVert;
+    testShipBadVert.type = "Bad hor";
+    testShipBadVert.initialCoordinate = "g7";
+    testShipBadVert.direction = "vertical";
+    testShipBadVert.createPlacementVector();
+  
+    REQUIRE( testShipGoodHor.isLegalShip() );
+    REQUIRE( !testShipBadHor.isLegalShip() );
+    REQUIRE( testShipGoodVert.isLegalShip() );
+    REQUIRE( !testShipBadVert.isLegalShip() );
+    REQUIRE( createShip(testShipGoodHor) );
+    REQUIRE( !createShip(testShipBadHor) );
+    REQUIRE( createShip(testShipGoodVert) );
+    REQUIRE( !createShip(testShipBadVert) );
+
     
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -193,24 +126,24 @@ TEST_CASE ( "BATTLESHIP TESTING", "[submarineExists]" )
     vector<int> randHorBad {lowRan, lowRan+1, lowRan+2, lowRan+3, lowRan+4};
     vector<int> randVertBad {lowRan, lowRan+10, lowRan+20, lowRan+30, lowRan+40};
     
+    testShipBadVert.holes = randVertBad;
+    testShipBadHor.holes = randHorBad;
+    testShipGoodVert.holes = randVertGood;
+    testShipGoodHor.holes = randHorGood;
+    
+    REQUIRE( createShip(testShipGoodHor) );
+    REQUIRE( !createShip(testShipBadHor) );
+    REQUIRE( createShip(testShipGoodVert) );
+    REQUIRE( !createShip(testShipBadVert) );
+    
     vector<int> randHorBad2 {highRan, highRan+1, highRan+2, highRan+3, highRan+4};
     vector<int> randVertBad2 {highRan, highRan+10, highRan+20, highRan+30, highRan+40};
     
+    testShipBadVert.holes = randVertBad2;
+    testShipBadHor.holes = randHorBad2;
     
-//    REQUIRE( isLegalShip(horizontalGood) );
-//    REQUIRE( !isLegalShip(horzontalBad) );
-//    REQUIRE( isLegalShip(verticalGood) );
-//    REQUIRE( !isLegalShip(verticalBad) );
-//    REQUIRE( !isLegalShip(outOfBounds) );
-//    REQUIRE( !isLegalShip(outOfBounds2) );
-//    REQUIRE( isLegalShip(randHorGood) );
-//    REQUIRE( !isLegalShip(randHorBad) );
-//    REQUIRE( isLegalShip(randVertGood) );
-//    REQUIRE( !isLegalShip(randHorBad2) );
-//    REQUIRE( !isLegalShip(randVertBad) );
-//    REQUIRE( !isLegalShip(randVertBad2) );
-    
-    
+    REQUIRE( !createShip(testShipBadHor) );
+    REQUIRE( !createShip(testShipBadVert) );
     
     REQUIRE( coordinateToInt("C8") == 28 );
     REQUIRE( coordinateToInt("1") == 100);
@@ -221,9 +154,6 @@ TEST_CASE ( "BATTLESHIP TESTING", "[submarineExists]" )
     REQUIRE( coordinateToInt("f11") == 100 );
     REQUIRE( coordinateToInt("-4") == 100 );
     
-    REQUIRE( coordinateToInt("-4") == 100 );
-    
-
 }
 
 
