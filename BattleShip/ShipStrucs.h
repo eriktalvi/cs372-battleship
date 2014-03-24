@@ -11,8 +11,12 @@
 using std::vector;
 
 
-struct ship
+struct ships
 {
+    struct aircraftCarrier
+    {
+        
+    };
     vector<int> holes;
 };
 

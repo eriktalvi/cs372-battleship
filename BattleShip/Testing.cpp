@@ -82,28 +82,9 @@ int coordinateToInt(string coord)
     return (coordLetter - 'a' + 1)*10 + coordNumber - 58;
 }
 
-//vector<int> intToShip(int coord)
-//{
-//    vector<int> shipPlacement;
-//    
-//    for(int i = 0; i < 5; i++)
-//    {
-//    shipPlacement[i] = coord + i;
-//    }
-//    
-//    return shipPlacement;
-//}
-
-bool placeAllShips()
+string userInputCoordinate()
 {
     string coord = "";
-    string direction = "";
-    
-    std::cout << "It's time to place your ships! Please enter the initial hole in letter-number form i.e. C3 using letter A-J and numbers 0-9." << std::endl;
-    std::cout << std::endl;
-    std::cout << "Your ship will be extended horizontally to the right or vertically down from the initial coordinate/hole." << std::endl;
-    std::cout << std::endl;
-    std::cout << "First we will place your aircraft carrier" <<std::endl;
     
     std::cout << "Enter initial coordinate:";
     std::cin >> coord;
@@ -115,48 +96,90 @@ bool placeAllShips()
         std::cin >> coord;
     }
     
+    return coord;
+}
+
+string userInputDirection()
+{
+    string direction = "";
+    
     std::cout << "Place ship (VERTICAL)ly or (HORIZONTAL)ly from this coordinate: ";
     std::cin >> direction;
     std::transform(direction.begin(),direction.end(),direction.begin(),::tolower);
     
     while (direction != "vertical" && direction != "horizontal")
     {
-        
         std::cout << "Enter either VERTICAL or HORIZONTAL" << std::endl;
         std::cout << "Place ship (VERTICAL)ly or (HORIZONTAL)ly from this coordinate: ";
         std::cin >> direction;
         std::transform(direction.begin(),direction.end(),direction.begin(),::tolower);
     }
-    
+
+    return direction;
+}
+
+vector<int> createPlacementVector (string initialCoord, int size, string direction)
+{
     vector<int> placementInts;
     
     if(direction == "horizontal")
-        coord[1] = coord[1] - 1;
+        initialCoord[1] = initialCoord[1] - 1;
     if (direction == "vertical")
-        coord[0] = coord[0] - 1;
+        initialCoord[0] = initialCoord[0] - 1;
     
     for (int i = 0; i < 5; i++)
     {
         if(direction == "horizontal")
         {
-            coord[1] = coord[1] + 1;
-            placementInts.push_back(coordinateToInt(coord));
+            initialCoord[1] = initialCoord[1] + 1;
+            placementInts.push_back(coordinateToInt(initialCoord));
         }
         else if (direction == "vertical")
         {
-            coord[0] = coord[0] + 1;
-            placementInts.push_back(coordinateToInt(coord));
+            initialCoord[0] = initialCoord[0] + 1;
+            placementInts.push_back(coordinateToInt(initialCoord));
         }
-        std::cout << placementInts[i];
+
     }
+    // Ship will exist within a future player Class.
+    
+    return placementInts;
+}
+
+bool createShip()
+{
+    std::cout << "First we will place your aircraft carrier" <<std::endl;
+    string coord = userInputCoordinate();
+    string direction = userInputDirection();
+    
+    vector<int> placementInts = createPlacementVector(coord, 5, direction);
     
     if (!isLegalShip(placementInts))
     {
-        std::cout << "cant place ship there";
         return 0;
     }
+    return true;
+}
+
+bool placeAllShips()
+{
+    std::cout << "It's time to place your ships! Please enter the initial hole in letter-number form i.e. C3 using letter A-J and numbers 0-9." << std::endl;
+    std::cout << std::endl;
+    std::cout << "Your ship will be extended horizontally to the right or vertically down from the initial coordinate/hole." << std::endl;
+    std::cout << std::endl;
     
-    // Ship will exist within a future player Class.
+    
+    
+    
+    while (!createShip())
+    {
+        std::cout << "Bad placement, try again" << std::endl;
+    }
+    
+
+    
+    
+    
     
     return 1;
 }
