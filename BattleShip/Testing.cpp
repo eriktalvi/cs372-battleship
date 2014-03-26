@@ -51,15 +51,14 @@ string userInputDirection() {
 
 bool createShip(ships currentShip) {
     std::cout << "Placing " << currentShip.type <<std::endl;
-//    currentShip.initialCoordinate = userInputCoordinate();
-//    currentShip.direction = userInputDirection();
+    //currentShip.initialCoordinate = userInputCoordinate();
+    //currentShip.direction = userInputDirection();
     currentShip.createPlacementVector();
     return currentShip.legalShip;
 }
 
 bool placeAllShips() {
-    std::cout << "It's time to place your ships! Please enter the initial hole in letter-number form i.e."
-        << "C3 using letter A-J and numbers 0-9." << std::endl;
+    std::cout << "It's time to place your ships! Please enter the initial hole in letter-number form i.e." << "C3 using letter A-J and numbers 0-9." << std::endl;
     std::cout << std::endl;
     std::cout << "Your ship will be extended horizontally to the right or vertically down from the initial coordinate/hole." << std::endl;
     

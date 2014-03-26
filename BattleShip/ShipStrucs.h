@@ -13,6 +13,7 @@ using std::vector;
 using std::string;
 
 struct ships {
+    
     ships () :
         legalShip(1), type("default"), initialCoordinate("a0"), direction("horizontal"), size(5) { }
 
